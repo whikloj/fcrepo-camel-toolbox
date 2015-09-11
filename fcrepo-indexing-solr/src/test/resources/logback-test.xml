@@ -7,7 +7,7 @@
         </encoder>
     </appender>
 
-  <logger name="org.fcrepo.camel.indexing" additivity="false" level="${fcrepo.log.camel.indexing:-INFO}">
+  <logger name="org.fcrepo.camel.indexing" additivity="false" level="${fcrepo.log.camel.indexing:-DEBUG}">
     <appender-ref ref="STDOUT"/>
   </logger>
   <logger name="org.apache.camel" additivity="false" level="${fcrepo.log.camel:-INFO}">
@@ -16,7 +16,7 @@
   <logger name="org.fcrepo" additivity="false" level="${fcrepo.log:-INFO}">
     <appender-ref ref="STDOUT"/>
   </logger>
-  <root additivity="false" level="INFO">
+  <root additivity="false" level="DEBUG">
     <appender-ref ref="STDOUT"/>
   </root>
 </configuration>
