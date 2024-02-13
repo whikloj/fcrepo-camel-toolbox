@@ -8,10 +8,13 @@ package org.fcrepo.camel.indexing.solr;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.support.builder.Namespaces;
+import org.apache.camel.builder.PredicateBuilder;
+import org.apache.camel.Predicate;
 import org.fcrepo.camel.processor.EventProcessor;
 import org.fcrepo.camel.common.processor.AddBasicAuthProcessor;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.commons.lang3.StringUtils;
 import static java.util.stream.Collectors.toList;
 import static org.apache.camel.Exchange.CONTENT_TYPE;
 import static org.apache.camel.Exchange.HTTP_METHOD;
@@ -66,6 +69,8 @@ public class SolrRouter extends RouteBuilder {
 
         final String solrUsername = config.getSolrUsername();
         final String solrPassword = config.getSolrPassword();
+        final Predicate useSolrAuth = PredicateBuilder.constant(
+                "true".equals(!StringUtils.isEmpty(solrUsername) && !StringUtils.isEmpty(solrPassword)));
         /*
          * A generic error handler (specific to this RouteBuilder)
          */
@@ -108,7 +113,6 @@ public class SolrRouter extends RouteBuilder {
                             header(FCREPO_URI).isEqualTo(constant(uri))))
                         .collect(toList()))))
             .choice()
-<<<<<<< HEAD
                 .when(and(not(constant(config.isIndexingPredicate())),
                           not(constant(config.isCheckHasIndexingTransformation()))))
                     .setHeader(INDEXING_TRANSFORMATION).simple(config.getDefaultTransform())
@@ -168,6 +172,7 @@ public class SolrRouter extends RouteBuilder {
                         .to("direct:send.to.solr")
                     .otherwise()
                         .log(LoggingLevel.INFO, logger, "Skipping ${header.CamelFcrepoUri}");
+
 
 
         /*
