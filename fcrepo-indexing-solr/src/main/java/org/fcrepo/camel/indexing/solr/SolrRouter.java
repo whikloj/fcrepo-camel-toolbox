@@ -174,7 +174,6 @@ public class SolrRouter extends RouteBuilder {
                         .log(LoggingLevel.INFO, logger, "Skipping ${header.CamelFcrepoUri}");
 
 
-
         /*
          * Send the transformed resource to Solr
          */
